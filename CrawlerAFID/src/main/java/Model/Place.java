@@ -12,12 +12,13 @@ public class Place {
     private String placeOpenTime;
     private String placeType;
     private String placePrice;
+    private String linkText;
     private List<Comment> listComment;
 
     public Place() {
     }
 
-    public Place(String id, String placeName, String placeDesciption, List<String> placeImages, String placeRating, String placeAddress, String placeOpenTime, String placeType, String placePrice, List<Comment> listComment) {
+    public Place(String id, String placeName, String placeDesciption, List<String> placeImages, String placeRating, String placeAddress, String placeOpenTime, String placeType, String placePrice, String linkText, List<Comment> listComment) {
         this.id = id;
         this.placeName = placeName;
         this.placeDesciption = placeDesciption;
@@ -27,7 +28,16 @@ public class Place {
         this.placeOpenTime = placeOpenTime;
         this.placeType = placeType;
         this.placePrice = placePrice;
+        this.linkText = linkText;
         this.listComment = listComment;
+    }
+
+    public String getLinkText() {
+        return linkText;
+    }
+
+    public void setLinkText(String linkText) {
+        this.linkText = linkText;
     }
 
     public String getId() {
