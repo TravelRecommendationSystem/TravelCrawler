@@ -5,12 +5,12 @@ import java.util.Date;
 public class Comment {
     private String userName;
     private String commentDesciption;
-    private Date createdDate;
+    private String createdDate;
 
     public Comment() {
     }
 
-    public Comment(String userName, String commentDesciption, Date createdDate) {
+    public Comment(String userName, String commentDesciption, String createdDate) {
         this.userName = userName;
         this.commentDesciption = commentDesciption;
         this.createdDate = createdDate;
@@ -32,11 +32,11 @@ public class Comment {
         this.commentDesciption = commentDesciption;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 }

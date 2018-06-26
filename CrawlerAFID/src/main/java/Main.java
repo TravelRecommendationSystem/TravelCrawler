@@ -2,7 +2,10 @@ import Parse.CommentParse;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,8 +30,10 @@ public class Main {
         WebDriver driver = new FirefoxDriver();
         driver.get(baseUrl);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+        TimeUnit.SECONDS.sleep(10);
         
-        CommentParse commentParse = new CommentParse(driver, baseUrl);
+
+        CommentParse commentParse = new CommentParse(driver);
         commentParse.parse();
         
         driver.quit();
