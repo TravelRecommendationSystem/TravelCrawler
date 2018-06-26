@@ -1,4 +1,4 @@
-package Controller;
+package Parse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,64 +61,64 @@ public class PageCrawl {
 
 	// crawl page content
 	public static void crawlPage(WebDriver driver) {
-		//use for other website don't have some column
+		// use for other website don't have some column
 		try {
 			WebElement placeName = driver.findElement(By.className("place1-name"));
 			System.out.println(placeName.getText());
-		}catch(WebDriverException e) {
+		} catch (WebDriverException e) {
 			System.out.println("Not found element place-name");
 		}
-		
+
 		try {
-			List<WebElement> placeDesciption =driver.findElements(By.className("porlet-content"));
+			List<WebElement> placeDesciption = driver.findElements(By.className("porlet-content"));
 			System.out.println(placeDesciption.get(1).getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
 			WebElement placeImages = driver.findElement(By.cssSelector(".embed-foody >img"));
 			System.out.println(placeImages.getAttribute("src"));
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
 			List<WebElement> placeRating = driver.findElements(By.className("place-score-number"));
 			System.out.println(placeRating.get(5).getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
-			WebElement placeAddress =driver.findElement(By.className("place-meta-item"));
+			WebElement placeAddress = driver.findElement(By.className("place-meta-item"));
 			System.out.println(placeAddress.getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
 			List<WebElement> placeOpenTime = driver.findElements(By.cssSelector(".place-meta-item"));
 			System.out.println(placeOpenTime.get(2).getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
 			WebElement typePlace = driver.findElement(By.className("place-type"));
 			System.out.println(typePlace.getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
+
 		try {
 			WebElement placePrice = driver.findElement(By.className("icon-tag"));
 			System.out.println(placePrice.getText());
-		}catch(WebDriverException e) {
-			
+		} catch (WebDriverException e) {
+
 		}
-		
-		//Save database
+
+		// Save database
 	}
 
 	// Take all links
@@ -145,14 +145,5 @@ public class PageCrawl {
 			System.out.println("GetLinks not found link=============" + e2.getMessage());
 		}
 		return listLinks;
-	}
-
-	public static void main(String[] arg) throws InterruptedException {
-		System.setProperty("webdriver.gecko.driver", "/home/tienbui/Downloads/geckodriver");
-		WebDriver driver = new FirefoxDriver();
-		LoginSystem(driver, "truongvinhtienuit@gmail.com", "123456");
-		ExpandAllPlaces(driver);
-		getLinks(driver);
-		driver.quit();
 	}
 }
