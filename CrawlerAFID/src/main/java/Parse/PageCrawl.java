@@ -30,31 +30,23 @@ public class PageCrawl {
 		} catch (WebDriverException e) {// TH disconnect, Not found element replace nav1,TimeoutException
 			System.out.println("LoginSystem================");
 		}
-
 	}
 
 	// Click XemThem button if exist XemThem button
 	public static void ExpandAllPlaces(WebDriver driver) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, 20);
-			try {// Check page loaded XemThem
-				wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
-				WebElement webElement = driver.findElement(By.linkText("Xem thêm"));
-				while (webElement != null) {
-					try {
-						webElement.click();
-						Thread.sleep(3000);
-					} catch (Exception e) {
-						System.out.println("===========ExpandAllItem" + e.getMessage());
-						break;
-					}
+		try {// Check page loaded XemThem
+			WebElement webElement = driver.findElement(By.linkText("Xem thêm"));
+			while (webElement != null) {
+				try {
+					webElement.click();
+					Thread.sleep(3000);
+				} catch (Exception e) {
+					System.out.println("===========ExpandAllItem" + e.getMessage());
+					break;
 				}
-			} catch (WebDriverException e1) {
-				System.out.println("===========TimeoutExpandAllItem" + e1.getMessage());
 			}
-
-		} catch (WebDriverException e1) {// Not found elements TimeoutException
-			System.out.println("Not found elementExpandAllItem");
+		} catch (WebDriverException e1) {
+			System.out.println("===========TimeoutExpandAllItem" + e1.getMessage());
 		}
 
 	}
@@ -145,5 +137,14 @@ public class PageCrawl {
 			System.out.println("GetLinks not found link=============" + e2.getMessage());
 		}
 		return listLinks;
+	}
+
+	public static void main(String[] arg) {
+		System.setProperty("webdriver.gecko.driver", "/home/tienbui/Downloads/geckodriver");
+		WebDriver driver = new FirefoxDriver();
+		LoginSystem(driver, "truongvinhtienuit@gmail.com", "123456");
+		ExpandAllPlaces(driver);
+		getLinks(driver);
+		// driver.quit();
 	}
 }
