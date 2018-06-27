@@ -26,7 +26,7 @@ public class LinkDAO {
     }
 
     //Insert Link
-    public void InsertLink(Link linkModel) {
+    public Boolean InsertLink(Link linkModel) {
         try {
             BasicDBObject object = new BasicDBObject();
             object.append(MyConstants.URL_FIELD, linkModel.getLinkText());
@@ -37,13 +37,15 @@ public class LinkDAO {
             //Flag to mark fail or success request
             object.append(MyConstants.FLAG_FIELD, linkModel.getFlag());
             linkDB.insert(object);
-            System.out.println("Done!");
+            return true;
         } catch (Exception e) {
+            return false;
         }
+
     }
 
     //Inset List Link
-    public void InsertListLink(List<Link> linkList) {
+    public boolean InsertListLink(List<Link> linkList) {
         try {
             DBObject object;
             List<DBObject> dbObjectList = new ArrayList<DBObject>();
@@ -59,13 +61,15 @@ public class LinkDAO {
                 dbObjectList.add(object);
             }
             linkDB.insert(dbObjectList);
+            return true;
 
         } catch (Exception e) {
+            return false;
         }
     }
 
     //update link request success
-    public void UpdateSuccessLink(Link linkModel) {
+    public Boolean UpdateSuccessLink(Link linkModel) {
         try {
             BasicDBObject whereClause = new BasicDBObject(MyConstants.URL_FIELD, linkModel.getLinkText());
             BasicDBObject object = new BasicDBObject();
@@ -79,13 +83,14 @@ public class LinkDAO {
             values.put("$inc", object1);
             // excute update flag URL.
             WriteResult result = linkDB.update(whereClause, values);
-            System.out.println("Done!");
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 
     //update link request fail
-    public void UpdateFailLink(Link linkModel) {
+    public Boolean UpdateFailLink(Link linkModel) {
         try {
             BasicDBObject whereClause = new BasicDBObject(MyConstants.URL_FIELD, linkModel.getLinkText());
             BasicDBObject object = new BasicDBObject();
@@ -101,17 +106,19 @@ public class LinkDAO {
             values.put("$inc", object1);
             // excute update flag URL.
             WriteResult result = linkDB.update(whereClause, values);
-            System.out.println("Done!");
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 
     //delete by linktext
-    public void DeleteLink(Link linkModel) {
+    public Boolean DeleteLink(Link linkModel) {
         try {
             linkDB.remove(new BasicDBObject().append(MyConstants.URL_FIELD, linkModel.getLinkText()));
-            System.out.println("Done!");
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 }

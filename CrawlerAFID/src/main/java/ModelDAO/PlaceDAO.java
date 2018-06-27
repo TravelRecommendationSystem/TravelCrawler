@@ -5,9 +5,11 @@ import Model.Link;
 import Model.Place;
 import MongoDB.MyConstants;
 import com.mongodb.*;
+
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
 import static MongoDB.MongoUtils.getMongoClient;
 
 public class PlaceDAO {
@@ -28,7 +30,7 @@ public class PlaceDAO {
     }
 
     //insert one place
-    public void InsertPlace(Place placeModel) {
+    public Boolean InsertPlace(Place placeModel) {
         try {
             BasicDBObject object = new BasicDBObject();
             List<DBObject> dbObjectList = new ArrayList<DBObject>();
@@ -53,14 +55,42 @@ public class PlaceDAO {
             }
             object.append(MyConstants.PLACE_COMMENTS_FIELD, dbObjectList);
             placeDB.insert(object);
-            System.out.println("Done!");
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 
+    //update comments by ID place
+    public Boolean UpdateCMTByID(String id, List<Comment> commentList) {
+        try {
+            BasicDBObject object = new BasicDBObject();
+            List<DBObject> dbObjectList = new ArrayList<DBObject>();
+            DBObject commentObject;
+            BasicDBObject values =  new BasicDBObject();
+            //where clause to query mongodb
+            BasicDBObject WhereClause =  new BasicDBObject(MyConstants.PLACE_ID_FIELD, id);
+            for (Comment comment : commentList) {
+                commentObject = new BasicDBObject();
+                commentObject.put(MyConstants.COMMENT_USER_FIELD, comment.getUserName());
+                commentObject.put(MyConstants.COMMENT_CREATEDATE_FIELD, comment.getCreatedDate());
+                commentObject.put(MyConstants.COMMENT_CONTENT_FIELD, comment.getCommentDesciption());
+                //add list object to save mongodb
+                dbObjectList.add(commentObject);
+            }
+            object.append(MyConstants.PLACE_COMMENTS_FIELD, dbObjectList);
+            values.put("$set",object);
+            WriteResult writeResult = placeDB.update(WhereClause,values);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
     //insert list place
-    public void InserListPlace(List<Place> placeList) {
-        try{
+    public Boolean InserListPlace(List<Place> placeList) {
+        try {
             DBObject object;
             DBObject commentObject;
             List<DBObject> commentList;
@@ -90,15 +120,19 @@ public class PlaceDAO {
                 objectList.add(object);
             }
             placeDB.insert(objectList);
-        }catch (Exception e){}
-
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     //delet by linktext of place
-    public void DeletePLace(Place place) {
+    public Boolean DeletePLace(Place place) {
         try {
             placeDB.remove(new BasicDBObject().append(MyConstants.PLACE_lINKTEXT_FIELD, place.getLinkText()));
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 }
