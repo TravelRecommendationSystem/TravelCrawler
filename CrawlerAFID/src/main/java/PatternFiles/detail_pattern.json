@@ -48,7 +48,7 @@
       }
     }
   },
-  "tripadvisor": {
+  "tripadvisor.com": {
     "rootUrl": "https://www.tripadvisor.com.vn/Attractions-g293925-Activities-Ho_Chi_Minh_City.html",
     "detailLink": {
       "selectorType": "cssQuery",

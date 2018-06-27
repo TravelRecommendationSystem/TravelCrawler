@@ -16,7 +16,11 @@
         <groupId>com.opera</groupId>
         <artifactId>operadriver</artifactId>
     </dependency>
-
+    <dependency>
+        <groupId>org.glassfish</groupId>
+        <artifactId>javax.json</artifactId>
+        <version>1.1.2</version>
+    </dependency>
     <!--  http://mvnrepository.com/artifact/org.mongodb/mongo-java-driver%20%20-->
     <dependency>
         <groupId>org.mongodb</groupId>
