@@ -37,8 +37,6 @@ public class TripNFetch {
 			while (webElement.getText().equals("Xem thêm")) {
 				try {
 					webElement.click();
-					System.out.println("****************************");
-					// wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
 					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					webElement = driver.findElement(By.linkText("Xem thêm"));
 				} catch (Exception e) {

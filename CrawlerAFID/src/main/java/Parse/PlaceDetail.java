@@ -79,7 +79,9 @@ public class PlaceDetail {
 	public static void crawlLinks(WebDriver driver, List<String>linkList, Pattern part) {
 		try {
 			WebDriver dr = new FirefoxDriver();
+			System.out.println("CRAWLLINKS START");
 			for (String link : linkList) {
+				System.out.println("CRAWLLINKS"+link);
 				try {
 					dr.get(link);
 					crawlPage(dr, part);
@@ -88,11 +90,11 @@ public class PlaceDetail {
 				} catch (WebDriverException e) {// Exit browser immediate, disconnect
 					System.out.println("GetLinks=============" + e.getMessage());
 				} catch (NullPointerException e1) {// Not found attribute href after replace href1
-					System.out.println("GetLinks not found link=============" + e1.getMessage());
+					
 				}
 			}
 		} catch (WebDriverException e2) {
-			System.out.println("GetLinks not found link=============" + e2.getMessage());
+			
 		}
 	}
 }

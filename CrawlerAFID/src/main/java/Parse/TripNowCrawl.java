@@ -15,8 +15,6 @@ public class TripNowCrawl {
 		tripNowPart.getDataFromPattern();
 		WebDriver driver = DocumentDriver.getDriver();
 		TripNFetch.getDocumen(driver, "truongvinhtienuit@gmail.com", "123456");
-		// Click button XemThem
-		//TripNFetch.expandAllPlaces(driver);
 		List<String> linkList = TripNFetch.getLinkList(driver);
 		PlaceDetail.crawlLinks(driver, linkList, tripNowPart);
 	}
