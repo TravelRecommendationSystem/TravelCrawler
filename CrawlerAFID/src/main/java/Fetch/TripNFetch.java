@@ -11,10 +11,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TripNFetch extends TripFetch{
+public class TripNFetch extends TripFetch {
 	public TripNFetch(String domain) {
 		this.setDomain(domain);
 	}
+
 	// Login system
 	public void getDocumen(WebDriver driver, String userName, String passWord) {
 		try {

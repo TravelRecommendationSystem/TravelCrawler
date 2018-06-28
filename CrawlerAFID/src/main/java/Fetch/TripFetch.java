@@ -84,7 +84,7 @@ public class TripFetch {
 	public void setPlaceType(String placeType) {
 		this.placeType = placeType;
 	}
-	
+
 	public String getImage() {
 		return image;
 	}
@@ -100,7 +100,7 @@ public class TripFetch {
 	public void setPlacePrice(String placePrice) {
 		this.placePrice = placePrice;
 	}
-	
+
 	public String getDomain() {
 		return domain;
 	}
@@ -108,8 +108,6 @@ public class TripFetch {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-
-	
 
 	public int getIndexTime() {
 		return indexTime;
@@ -153,7 +151,7 @@ public class TripFetch {
 
 	public TripFetch() {
 	}
-	
+
 	public TripFetch(String domain) {
 		super();
 		this.domain = domain;
@@ -188,14 +186,17 @@ public class TripFetch {
 		this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
 		this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
 	}
-	//IF don't exist column catch NullPointerException
+
+	// IF don't exist column catch NullPointerException
 	public void getDocument(WebDriver driver, String userName, String passWord) {
-		
+
 	}
+
 	public List<String> expandAllPlaces(WebDriver driver) {
 		List<String> linkList = new ArrayList<String>();
 		return linkList;
 	}
+
 	public List<String> getLinkList(WebDriver driver) {
 		List<String> linkList = new ArrayList<String>();
 		return linkList;

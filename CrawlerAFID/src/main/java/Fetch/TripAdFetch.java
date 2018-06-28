@@ -15,6 +15,7 @@ public class TripAdFetch extends TripFetch {
 	public TripAdFetch(String domain) {
 		this.setDomain(domain);
 	}
+
 	public void getDocument(WebDriver driver, String userName, String passWord) {
 		System.out.println("Hello");
 		try {
@@ -43,11 +44,11 @@ public class TripAdFetch extends TripFetch {
 					wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
 					webElement = driver.findElement(By.cssSelector("a.nav.next"));
 				} catch (Exception e) {
-					
+
 				}
 			}
 		} catch (WebDriverException e1) {// End not found nextpage
-			
+
 		}
 		return linkList;
 	}
