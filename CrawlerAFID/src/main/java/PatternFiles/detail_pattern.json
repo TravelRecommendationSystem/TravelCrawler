@@ -1,0 +1,96 @@
+{
+  "tripnow.vn": {
+    "rootUrl": "https://id.foody.vn/account/login?returnUrl=https://www.tripnow.vn/ho-chi-minh/travel/tim-kiem?ds=dia-diem",
+    "detailLink": {
+      "selectorType": "className",
+      "target": "link-absolute"
+    },
+    "name": {
+      "selectorType": "className",
+      "target": "place-name"
+    },
+    "address": {
+      "selectorType": "className",
+      "target": "place-meta-item"
+    },
+    "rating":{
+      "selectorType": "className",
+      "target": "place-total-score"
+    },
+    "description": {
+      "selectorType": "className",
+      "target": "porlet-content"
+    },
+    "openTime": {
+      "selectorType": "cssSelector",
+      "target": ".place-meta-item:nth-child(3) > span"
+    },
+    "placePrice": {
+      "selectorType": "cssSelector",
+      "target": ".place-meta-item:nth-child(4)"
+    },
+    "placeType": {
+      "selectorType": "className",
+      "target": "place-type"
+    },
+    "comments": {
+      "userName": {
+        "selectorType": "className",
+        "target": "story-username"
+      },
+      "description": {
+        "selectorType": "className",
+        "target": "story-desc"
+      },
+      "createdDate": {
+        "selectorType": "cssSelector",
+        "target": ".story-meta-item > span"
+      }
+    }
+  },
+  "tripadvisor.com": {
+    "rootUrl": "https://www.tripadvisor.com.vn/Attractions-g293925-Activities-Ho_Chi_Minh_City.html",
+    "detailLink": {
+      "selectorType": "cssQuery",
+      "target": "div.item.name > a"
+    },
+    "name": {
+      "selectorType": "cssQuery",
+      "target": "h1.heading_title"
+    },
+    "address": {
+      "selectorType": "cssQuery",
+      "target": "div.blEntry.address"
+    },
+    "rating": {
+      "selectorType": "cssQuery",
+      "target": "span.overallRating"
+    },
+    "description": {
+      "selectorType": "cssQuey",
+      "target": "div.modal-card-body"
+    },
+    "openTime": {
+      "selectorType": "cssQuey",
+      "target": "div.detail_section.hours > div:nth-child(2)"
+    },
+    "placeType": {
+      "selectorType": "cssQuery",
+      "target": "div.detail:nth-child(1)"
+    },
+    "comments": {
+      "userName": {
+        "selectorType": "cssSelector",
+        "target": "span[class='expand_inline scrname']"
+      },
+      "description": {
+        "selectorType": "cssSelector",
+        "target": "p[class='partial_entry']"
+      },
+      "createdDate":{
+        "selectorType": "cssSelector",
+        "target": "span[class='ratingDate relativeDate']"
+      }
+    }
+  }
+}

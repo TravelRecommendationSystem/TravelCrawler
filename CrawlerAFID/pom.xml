@@ -12,10 +12,15 @@
 			<artifactId>selenium-java</artifactId>
 			<version>3.12.0</version>
 		</dependency>
-		 <dependency>
-            <groupId>com.opera</groupId>
-            <artifactId>operadriver</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.opera</groupId>
+			<artifactId>operadriver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1.2</version>
+		</dependency>
 		<!-- http://mvnrepository.com/artifact/org.mongodb/mongo-java-driver%20%20 -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -23,19 +28,19 @@
 			<version>2.12.4</version>
 		</dependency>
 	</dependencies>
-	 <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.opera</groupId>
-                <artifactId>operadriver</artifactId>
-                <version>1.5</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.seleniumhq.selenium</groupId>
-                        <artifactId>selenium-remote-driver</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.opera</groupId>
+				<artifactId>operadriver</artifactId>
+				<version>1.5</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.seleniumhq.selenium</groupId>
+						<artifactId>selenium-remote-driver</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
