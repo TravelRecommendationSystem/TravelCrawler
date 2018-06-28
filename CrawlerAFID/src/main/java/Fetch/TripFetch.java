@@ -1,14 +1,18 @@
-package PatternFiles;
+package Fetch;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-public class Pattern {
+import org.openqa.selenium.WebDriver;
+
+public class TripFetch {
 	String rootUrl;
 	String domain;
 	String name;
@@ -22,6 +26,8 @@ public class Pattern {
 	String commentUsername;
 	String commentDescription;
 	String commentCreatedDate;
+	int indexTime;
+	int indexType;
 
 	public String getRootUrl() {
 		return rootUrl;
@@ -103,6 +109,24 @@ public class Pattern {
 		this.domain = domain;
 	}
 
+	
+
+	public int getIndexTime() {
+		return indexTime;
+	}
+
+	public void setIndexTime(int indexTime) {
+		this.indexTime = indexTime;
+	}
+
+	public int getIndexType() {
+		return indexType;
+	}
+
+	public void setIndexType(int indexType) {
+		this.indexType = indexType;
+	}
+
 	public String getCommentUsername() {
 		return commentUsername;
 	}
@@ -127,10 +151,10 @@ public class Pattern {
 		this.commentCreatedDate = commentCreatedDate;
 	}
 
-	public Pattern() {
+	public TripFetch() {
 	}
 	
-	public Pattern(String domain) {
+	public TripFetch(String domain) {
 		super();
 		this.domain = domain;
 	}
@@ -146,44 +170,35 @@ public class Pattern {
 		JsonObject rootObject = jsonReader.readObject();
 
 		// Get data for tripadvisor
-		JsonObject tripadvisorObject = rootObject.getJsonObject(domain);
-		JsonObject tripadvisorCommentObject = tripadvisorObject.getJsonObject("comments");
+		JsonObject tripObject = rootObject.getJsonObject(domain);
+		JsonObject tripCommentObject = tripObject.getJsonObject("comments");
 		// Get fields
-		this.setRootUrl(tripadvisorObject.getString("rootUrl"));
-		this.setName(tripadvisorObject.getString("name"));
-		this.setDescription(tripadvisorObject.getString("description"));
-		this.setImage(tripadvisorObject.getString("image"));
-		this.setRating(tripadvisorObject.getString("rating"));
-		this.setAddress(tripadvisorObject.getString("address"));
-		this.setOpenTime(tripadvisorObject.getString("openTime"));
-		this.setPlaceType(tripadvisorObject.getString("placeType"));
-		this.setPlacePrice(tripadvisorObject.getString("placePrice"));
-		this.setCommentUsername(tripadvisorCommentObject.getJsonObject("userName").getString("target"));
-		this.setCommentDescription(tripadvisorCommentObject.getJsonObject("description").getString("target"));
-		this.setCommentCreatedDate(tripadvisorCommentObject.getJsonObject("createdDate").getString("target"));
+		this.setRootUrl(tripObject.getString("rootUrl"));
+		this.setName(tripObject.getString("name"));
+		this.setDescription(tripObject.getString("description"));
+		this.setImage(tripObject.getString("image"));
+		this.setRating(tripObject.getString("rating"));
+		this.setAddress(tripObject.getString("address"));
+		this.setOpenTime(tripObject.getJsonObject("openTime").getString("target"));
+		this.setIndexTime(tripObject.getJsonObject("openTime").getInt("index"));
+		this.setPlaceType(tripObject.getJsonObject("placeType").getString("target"));
+		this.setIndexType(tripObject.getJsonObject("placeType").getInt("index"));
+		this.setPlacePrice(tripObject.getString("placePrice"));
+		this.setCommentUsername(tripCommentObject.getJsonObject("userName").getString("target"));
+		this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
+		this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
 	}
 	//IF don't exist column catch NullPointerException
-	// Test
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder();
-		result.append("\n rootUrl: " + this.getRootUrl());
-		result.append("\n name: " + this.getName());
-		result.append("\n address: " + this.getAddress());
-		result.append("\n rating: " + this.getRating());
-		result.append("\n desc: " + this.getDescription());
-		result.append("\n type: " + this.getPlaceType());
-		result.append("\n time: " + this.getOpenTime());
-		result.append("\n username: " + this.getCommentUsername());
-		result.append("\n comment: " + this.getCommentDescription());
-		result.append("\n date: " + this.getCommentCreatedDate());
-		return result.toString();
+	public void getDocument(WebDriver driver, String userName, String passWord) {
+		
+	}
+	public List<String> expandAllPlaces(WebDriver driver) {
+		List<String> linkList = new ArrayList<String>();
+		return linkList;
+	}
+	public List<String> getLinkList(WebDriver driver) {
+		List<String> linkList = new ArrayList<String>();
+		return linkList;
 	}
 
-	public static void main(String[] arg) {
-		Pattern trip = new Pattern();
-		trip.setDomain("tripadvisor.com");
-		trip.getDataFromPattern();
-		System.out.println(trip.getRootUrl());
-	}
 }

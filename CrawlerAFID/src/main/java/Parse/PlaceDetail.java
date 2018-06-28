@@ -8,10 +8,10 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import PatternFiles.Pattern;
+import Fetch.TripFetch;
 
 public class PlaceDetail {
-	public static void crawlPage(WebDriver driver, Pattern part) {
+	public static void crawlPage(WebDriver driver, TripFetch part) {
 		// use for other website don't have some column
 		// Name
 		try {
@@ -51,19 +51,21 @@ public class PlaceDetail {
 		// openTime
 		try {
 			List<WebElement> placeOpenTime = driver.findElements(By.cssSelector(part.getOpenTime()));
-			System.out.println(placeOpenTime.get(2).getText());
+			System.out.println(placeOpenTime.get(part.getIndexTime()).getText());
 		} catch (WebDriverException e) {
 
 		} catch (IndexOutOfBoundsException e1) {
-			System.out.println("===================Outside of list because not found element");
+			System.out.println("===================Outside of list placeOpenTime because not found element");
 		}
 		// typePlace
 		try {
 			List<WebElement> typePlace = driver.findElements(By.cssSelector(part.getPlaceType()));
+			System.out.println(typePlace.get(part.getIndexType()).getText());
+
 		} catch (WebDriverException e) {
 
 		} catch (IndexOutOfBoundsException e1) {
-			System.out.println("===================Outside of list because not found element");
+			System.out.println("===================Outside of list  typePlace because not found element");
 		}
 		// placePrice
 		try {
@@ -76,12 +78,12 @@ public class PlaceDetail {
 		// Save database
 	}
 
-	public static void crawlLinks(WebDriver driver, List<String>linkList, Pattern part) {
+	public static void crawlLinks(WebDriver driver, List<String> linkList, TripFetch part) {
 		try {
 			WebDriver dr = new FirefoxDriver();
 			System.out.println("CRAWLLINKS START");
 			for (String link : linkList) {
-				System.out.println("CRAWLLINKS"+link);
+				System.out.println("CRAWLLINKS" + link);
 				try {
 					dr.get(link);
 					crawlPage(dr, part);
@@ -90,11 +92,11 @@ public class PlaceDetail {
 				} catch (WebDriverException e) {// Exit browser immediate, disconnect
 					System.out.println("GetLinks=============" + e.getMessage());
 				} catch (NullPointerException e1) {// Not found attribute href after replace href1
-					
+
 				}
 			}
 		} catch (WebDriverException e2) {
-			
+
 		}
 	}
 }

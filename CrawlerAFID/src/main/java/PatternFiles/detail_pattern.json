@@ -6,8 +6,14 @@
 		"image": ".embed-foody > img",
 		"rating": ".place-total-score",
 		"address": ".place-meta-item",
-		"openTime": ".place-meta-item",
-		"placeType": ".place-type",
+		"openTime":{
+			"target": ".place-meta-item",
+			"index":2
+		 },
+		"placeType":{
+			"target": ".place-type",
+			"index":0
+		 },
 		"placePrice": ".icon-tag",
 		"comments": {
 			"userName": {
@@ -31,8 +37,14 @@
 		"image": "div.modal-card-body-no-exist",
 		"rating": "span.overallRating",
 		"address": "div.blEntry.address",
-		"openTime": "div.detail_section.hours > div",
-		"placeType": "span.header_detail > div > a",
+		"openTime":{
+			"target": "div.detail_section.hours > div",
+			"index":1
+		 },
+		"placeType":{
+			"target": "span.header_detail > div > a",
+			"index":0
+		 },
 		"placePrice": ".icon-tag-no-exist",
 		"comments": {
 			"userName": {

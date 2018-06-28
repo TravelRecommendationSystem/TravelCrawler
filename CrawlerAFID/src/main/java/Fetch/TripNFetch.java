@@ -11,10 +11,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TripNFetch {
+public class TripNFetch extends TripFetch{
+	public TripNFetch(String domain) {
+		this.setDomain(domain);
+	}
 	// Login system
-
-	public static void getDocumen(WebDriver driver, String userName, String passWord) {
+	public void getDocumen(WebDriver driver, String userName, String passWord) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			driver.get("https://www.tripnow.vn/ho-chi-minh/travel/tim-kiem?q=&ds=dia-diem&dtids=696,694,699,1,12,14,5");
@@ -29,7 +31,8 @@ public class TripNFetch {
 	}
 
 	// Click XemThem button if exist XemThem button
-	public static void expandAllPlaces(WebDriver driver) {
+	public List<String> expandAllPlaces(WebDriver driver) {
+		List<String> linkList = new ArrayList<String>();
 		try {// Check page loaded XemThem
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
@@ -46,11 +49,11 @@ public class TripNFetch {
 		} catch (WebDriverException e1) {
 			System.out.println("===========TimeoutExpandAllPlaces" + e1.getMessage());
 		}
-
+		return linkList;
 	}
 
 	// get LinkList
-	public static List<String> getLinkList(WebDriver driver) {
+	public List<String> getLinkList(WebDriver driver) {
 		List<String> linkList = new ArrayList<String>();
 		expandAllPlaces(driver);
 		List<WebElement> listWebElement = driver.findElements(By.className("link-absolute"));

@@ -11,8 +11,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TripAdFetch {
-	public static void getDocument(WebDriver driver, String userName, String passWord) {
+public class TripAdFetch extends TripFetch {
+	public TripAdFetch(String domain) {
+		this.setDomain(domain);
+	}
+	public void getDocument(WebDriver driver, String userName, String passWord) {
+		System.out.println("Hello");
 		try {
 			driver.get("https://www.tripadvisor.com.vn/Attractions-g293925-Activities-c47-Ho_Chi_Minh_City.html");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -22,7 +26,7 @@ public class TripAdFetch {
 	}
 
 	// Click NextPage button take all links
-	public static List<String> expandAllPlaces(WebDriver driver) {
+	public List<String> expandAllPlaces(WebDriver driver) {
 		List<String> linkList = new ArrayList<String>();
 		try {// Check page loaded XemThem
 			WebDriverWait wait = new WebDriverWait(driver, 20);
@@ -36,8 +40,7 @@ public class TripAdFetch {
 						linkList.add(web.getAttribute("href"));
 					}
 					webElement.click();
-					//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
 					webElement = driver.findElement(By.cssSelector("a.nav.next"));
 				} catch (Exception e) {
 					
@@ -50,7 +53,7 @@ public class TripAdFetch {
 	}
 
 	// get LinkList
-	public static List<String> getLinkList(WebDriver driver) {
+	public List<String> getLinkList(WebDriver driver) {
 		List<String> linkList = expandAllPlaces(driver);
 		return linkList;
 	}
