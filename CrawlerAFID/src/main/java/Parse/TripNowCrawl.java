@@ -9,21 +9,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PageCrawl {
+public class TripNowCrawl {
 	private static List<String> listLinks;
 
 	// Login system
 
 	public static void LoginSystem(WebDriver driver, String userName, String passWord) {
 		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
 			driver.get("https://www.tripnow.vn/ho-chi-minh/travel/tim-kiem?q=&ds=dia-diem&dtids=696,694,699,1,12,14,5");
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.className("nav-user-name")));
 			driver.findElement(By.className("nav-user-name")).click();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			driver.findElement(By.id("Email")).sendKeys(userName);
 			driver.findElement(By.id("Password")).sendKeys(passWord);
 			driver.findElement(By.id("bt_submit")).click();
@@ -35,18 +34,22 @@ public class PageCrawl {
 	// Click XemThem button if exist XemThem button
 	public static void ExpandAllPlaces(WebDriver driver) {
 		try {// Check page loaded XemThem
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
 			WebElement webElement = driver.findElement(By.linkText("Xem thêm"));
-			while (webElement != null) {
+			while (webElement.getText().equals("Xem thêm")) {
 				try {
 					webElement.click();
-					Thread.sleep(3000);
+					System.out.println("****************************");
+					//wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					webElement = driver.findElement(By.linkText("Xem thêm"));
 				} catch (Exception e) {
-					System.out.println("===========ExpandAllItem" + e.getMessage());
-					break;
+					System.out.println("===========ExpandAllPlaces" + e.getMessage());
 				}
 			}
 		} catch (WebDriverException e1) {
-			System.out.println("===========TimeoutExpandAllItem" + e1.getMessage());
+			System.out.println("===========TimeoutExpandAllPlaces" + e1.getMessage());
 		}
 
 	}
@@ -54,55 +57,60 @@ public class PageCrawl {
 	// crawl page content
 	public static void crawlPage(WebDriver driver) {
 		// use for other website don't have some column
+		//Name
 		try {
-			WebElement placeName = driver.findElement(By.className("place1-name"));
+			WebElement placeName = driver.findElement(By.className("place-name"));
 			System.out.println(placeName.getText());
 		} catch (WebDriverException e) {
 			System.out.println("Not found element place-name");
 		}
-
+		//Description
 		try {
-			List<WebElement> placeDesciption = driver.findElements(By.className("porlet-content"));
-			System.out.println(placeDesciption.get(1).getText());
+			WebElement placeDesciption = driver.findElement(By.cssSelector("div.porlet-content"));
+			System.out.println(placeDesciption.getText());
 		} catch (WebDriverException e) {
-
+			System.out.println("Not found description");
 		}
-
+		//Image
 		try {
 			WebElement placeImages = driver.findElement(By.cssSelector(".embed-foody >img"));
 			System.out.println(placeImages.getAttribute("src"));
 		} catch (WebDriverException e) {
 
 		}
-
+		//Rating
 		try {
-			List<WebElement> placeRating = driver.findElements(By.className("place-score-number"));
-			System.out.println(placeRating.get(5).getText());
+			WebElement placeRating = driver.findElement(By.className("place-total-score"));
+			System.out.println(placeRating.getText());
 		} catch (WebDriverException e) {
 
 		}
-
+		//placeAddress
 		try {
 			WebElement placeAddress = driver.findElement(By.className("place-meta-item"));
 			System.out.println(placeAddress.getText());
 		} catch (WebDriverException e) {
 
 		}
-
+		//openTime
 		try {
 			List<WebElement> placeOpenTime = driver.findElements(By.cssSelector(".place-meta-item"));
 			System.out.println(placeOpenTime.get(2).getText());
 		} catch (WebDriverException e) {
 
+		}catch(IndexOutOfBoundsException e1) {
+			System.out.println("===================Outside of list because not found element");
 		}
-
+		//typePlace
 		try {
-			WebElement typePlace = driver.findElement(By.className("place-type"));
-			System.out.println(typePlace.getText());
+			List<WebElement> typePlace = driver.findElements(By.className("place-type"));
+			System.out.println(typePlace.get(0).getText());
 		} catch (WebDriverException e) {
 
+		}catch(IndexOutOfBoundsException e1) {
+			System.out.println("===================Outside of list because not found element");
 		}
-
+		//placePrice
 		try {
 			WebElement placePrice = driver.findElement(By.className("icon-tag"));
 			System.out.println(placePrice.getText());
