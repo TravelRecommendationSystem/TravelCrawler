@@ -1,11 +1,8 @@
 import Parse.CommentParse;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +16,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Main {
     private static String baseUrl = "https://www.tripadvisor.com.vn/Attraction_Review-g293925-d454974-Reviews-Saigon_Opera_House_Ho_Chi_Minh_Municipal_Theater-Ho_Chi_Minh_City.html";
-    private static String geckoPath = "/Users/phuongnl/UminoProjects/SpecializeSubject/geckodriver";
+    //private static String geckoPath = "/Users/phuongnl/UminoProjects/SpecializeSubject/geckodriver";
+    private static  String geckoPath = "D:\\subject\\SpecializedProject\\Source\\geckodriver.exe";
     
     private static String email = "phuong29071996@gmal.com";
     private static String password = "p1234560";

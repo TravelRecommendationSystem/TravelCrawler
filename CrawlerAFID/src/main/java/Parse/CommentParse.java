@@ -31,49 +31,38 @@ public class CommentParse {
     }
     
     public void parse() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        listPage = getCommentPages(wait);
-        int currentpage = 1;
-        List<WebElement> commentElements = new ArrayList<WebElement>();
-        
-        while (currentpage <= listPage.size()){
-            commentElements.addAll(getCommentElements(wait));
-            navigateNextCommentPage(currentpage);
-        }
-        if (commentElements.size() == 0)
-            return;
-        
-        for (WebElement element : commentElements) {
-            Comment comment = parseOneComment(element);
-            if (comment != null) {
-                listComment.add(comment);
+        listComment = new ArrayList<Comment>();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        //List<WebElement> commentElements = new ArrayList<WebElement>();
+
+        // khi nút next còn hiện thì còn thực hiện
+        do {
+            List<WebElement> commentElements = getCommentElements(wait);
+            for (WebElement element : commentElements) {
+                Comment comment = parseOneComment(element);
+                if (comment != null) {
+                    listComment.add(comment);
+                }
             }
-        }  
+        }
+        while (navigateNextCommentPage(wait));
         System.out.println(listComment);
     }
-    
-    public List<WebElement> getCommentPages(WebDriverWait wait) {
-        List<WebElement> listPage = new ArrayList<WebElement>();
-        try { 
-            By numBox = By.cssSelector("div[class='pageNumbers']");
-            By number = By.cssSelector("a[class='pageNum taLnk']");
-            listPage = wait.until(ExpectedConditions
-                    .presenceOfNestedElementsLocatedBy(numBox, number));
-        } catch(Exception ex) {
-            System.out.println(ex);
+
+    public boolean navigateNextCommentPage(WebDriverWait wait) {
+        try {
+            By nextButtonPath = By.cssSelector("div[class='prw_rup prw_common_north_star_pagination responsive'] > div > a[class='nav next taLnk ui_button primary']");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(nextButtonPath)).click();
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
-        return listPage;
-    }
-    
-    public void navigateNextCommentPage(int currentpage) {
-        listPage.get(++currentpage).click();
     }
     
     public List<WebElement> getCommentElements(WebDriverWait wait) {
         List<WebElement> commentElements = new ArrayList<WebElement>();
         try {
-            commentElements = wait.until(ExpectedConditions
-                    .presenceOfAllElementsLocatedBy(By.cssSelector("div[class='review-container']")));
+            commentElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("div[class='review-container']")));
         } catch(Exception ex) {
             System.out.println(ex);
         }
