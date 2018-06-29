@@ -1,6 +1,9 @@
 package Parse;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,42 +14,33 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import Fetch.TripFetch;
 
 public class PlaceDetail {
-	public static void crawlPage(WebDriver driver, TripFetch part) {
+	public static void crawlPage(WebDriver driver, TripFetch part, String image) {
 		// use for other website don't have some column
-		// Name
+		
 		try {
+			// Name
 			WebElement placeName = driver.findElement(By.cssSelector(part.getName()));
 			System.out.println(placeName.getText());
+//			//Image
+//			WebElement placeImages = driver.findElement(By.cssSelector(part.getImage()));
+			System.out.println("Image==================="+image);
+			//Rating
+			WebElement placeRating = driver.findElement(By.cssSelector(part.getRating()));
+			System.out.println(placeRating.getText());
+			//placeAddress
+			WebElement placeAddress = driver.findElement(By.cssSelector(part.getAddress()));
+			System.out.println(placeAddress.getText());
+			
 		} catch (WebDriverException e) {
 			System.out.println("Not found element place-name");
 		}
-		// Description
 		try {
+			// Description
 			WebElement placeDesciption = driver.findElement(By.cssSelector(part.getDescription()));
 			System.out.println(placeDesciption.getText());
-		} catch (WebDriverException e) {
-			System.out.println("Not found description");
-		}
-		// Image
-		try {
-			WebElement placeImages = driver.findElement(By.cssSelector(part.getImage()));
-			System.out.println(placeImages.getAttribute("src"));
-		} catch (WebDriverException e) {
-
-		}
-		// Rating
-		try {
-			WebElement placeRating = driver.findElement(By.cssSelector(part.getRating()));
-			System.out.println(placeRating.getText());
-		} catch (WebDriverException e) {
-
-		}
-		// placeAddress
-		try {
-			WebElement placeAddress = driver.findElement(By.cssSelector(part.getAddress()));
-			System.out.println(placeAddress.getText());
-		} catch (WebDriverException e) {
-
+			
+		}catch(WebDriverException e) {
+			
 		}
 		// openTime
 		try {
@@ -78,15 +72,13 @@ public class PlaceDetail {
 		// Save database
 	}
 
-	public static void crawlLinks(WebDriver driver, List<String> linkList, TripFetch part) {
+	public static void crawlLinks(HashMap<String,String> linkList, TripFetch part) {
 		try {
 			WebDriver dr = new FirefoxDriver();
-			System.out.println("CRAWLLINKS START");
-			for (String link : linkList) {
-				System.out.println("CRAWLLINKS" + link);
+			for (Map.Entry<String, String> link : linkList.entrySet()) {
 				try {
-					dr.get(link);
-					crawlPage(dr, part);
+					dr.get(link.getKey());
+					crawlPage(dr, part,link.getValue());
 					dr.close();
 					dr = new FirefoxDriver();
 				} catch (WebDriverException e) {// Exit browser immediate, disconnect

@@ -1,5 +1,6 @@
 package Parse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -11,11 +12,11 @@ import Fetch.TripNFetch;
 
 public class TripNowCrawl {
 	public static void main(String[] arg) {
-		TripFetch tripNowPart = new TripAdFetch("tripnow.vn");
-		tripNowPart.getDataFromPattern();
+		TripFetch tripPart = new TripNFetch("tripnow.vn");
+		tripPart.getDataFromPattern();
 		WebDriver driver = DocumentDriver.getDriver();
-		tripNowPart.getDocument(driver,"","");
-		List<String> linkList = tripNowPart.getLinkList(driver);
-		PlaceDetail.crawlLinks(driver, linkList, tripNowPart);
+		tripPart.getDocument(driver);
+		HashMap<String,String> linkList = tripPart.getLinkList(driver);
+		PlaceDetail.crawlLinks(linkList, tripPart);
 	}
 }

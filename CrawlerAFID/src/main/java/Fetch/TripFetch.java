@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.json.Json;
@@ -188,17 +189,17 @@ public class TripFetch {
 	}
 
 	// IF don't exist column catch NullPointerException
-	public void getDocument(WebDriver driver, String userName, String passWord) {
+	public void getDocument(WebDriver driver) {
 
 	}
 
-	public List<String> expandAllPlaces(WebDriver driver) {
-		List<String> linkList = new ArrayList<String>();
+	public HashMap<String, String> expandAllPlaces(WebDriver driver) {
+		HashMap<String, String> linkList = new HashMap<String, String>();
 		return linkList;
 	}
 
-	public List<String> getLinkList(WebDriver driver) {
-		List<String> linkList = new ArrayList<String>();
+	public HashMap<String, String> getLinkList(WebDriver driver) {
+		HashMap<String, String> linkList = new HashMap<String, String>();
 		return linkList;
 	}
 

@@ -1,7 +1,9 @@
 package Fetch;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -16,8 +18,7 @@ public class TripAdFetch extends TripFetch {
 		this.setDomain(domain);
 	}
 
-	public void getDocument(WebDriver driver, String userName, String passWord) {
-		System.out.println("Hello");
+	public void getDocument(WebDriver driver) {
 		try {
 			driver.get("https://www.tripadvisor.com.vn/Attractions-g293925-Activities-c47-Ho_Chi_Minh_City.html");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -27,18 +28,24 @@ public class TripAdFetch extends TripFetch {
 	}
 
 	// Click NextPage button take all links
-	public List<String> expandAllPlaces(WebDriver driver) {
-		List<String> linkList = new ArrayList<String>();
+	public HashMap<String, String> expandAllPlaces(WebDriver driver) {
+		// Create HashMap
+		HashMap<String, String> linkList = new HashMap<String, String>();
+		List<String> url = new ArrayList<String>();
 		try {// Check page loaded XemThem
 			WebDriverWait wait = new WebDriverWait(driver, 20);
 			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
 			WebElement webElement = driver.findElement(By.cssSelector("a.nav.next"));
-			List<WebElement> listElements = driver.findElements(By.cssSelector("div.listing_title > a"));
+			// List<WebElement> listElements =
+			// driver.findElements(By.cssSelector("div.listing_title > a"));
 			while (webElement.getText().equals("Tiếp theo")) {
 				try {
-					listElements = driver.findElements(By.cssSelector("div.listing_title > a"));
-					for (WebElement web : listElements) {
-						linkList.add(web.getAttribute("href"));
+					List<WebElement> elementLinkList = driver.findElements(By.cssSelector("div.listing_title > a"));
+					List<WebElement> elementImageList = driver.findElements(By.cssSelector(".photo_link > img"));
+					for (int i = 0; i < elementLinkList.size(); i++) {
+						linkList.put(elementLinkList.get(i).getAttribute("href"),
+								elementImageList.get(i).getAttribute("src"));
+						url.add(elementLinkList.get(i).getAttribute("href"));
 					}
 					webElement.click();
 					wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
@@ -50,12 +57,22 @@ public class TripAdFetch extends TripFetch {
 		} catch (WebDriverException e1) {// End not found nextpage
 
 		}
+		try {
+			List<WebElement> elementLinkList = driver.findElements(By.cssSelector("div.listing_title > a"));
+			List<WebElement> elementImageList = driver.findElements(By.cssSelector(".photo_link > img"));
+			for (int i = 0; i < elementLinkList.size(); i++) {
+				linkList.put(elementLinkList.get(i).getAttribute("href"), elementImageList.get(i).getAttribute("src"));
+				url.add(elementLinkList.get(i).getAttribute("href"));
+			}
+		} catch (WebDriverException e) {
+
+		}
 		return linkList;
 	}
 
 	// get LinkList
-	public List<String> getLinkList(WebDriver driver) {
-		List<String> linkList = expandAllPlaces(driver);
+	public HashMap<String, String> getLinkList(WebDriver driver) {
+		HashMap<String, String> linkList = expandAllPlaces(driver);
 		return linkList;
 	}
 }
