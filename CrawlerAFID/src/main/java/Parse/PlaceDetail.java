@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import Fetch.DocumentDriver;
 import org.openqa.selenium.By;
@@ -17,21 +18,20 @@ import Fetch.TripFetch;
 public class PlaceDetail {
 	public static void crawlPage(WebDriver driver, TripFetch part, String image) {
 		// use for other website don't have some column
-		
+
 		try {
 			// Name
 			WebElement placeName = driver.findElement(By.cssSelector(part.getName()));
 			System.out.println(placeName.getText());
-//			//Image
-//			WebElement placeImages = driver.findElement(By.cssSelector(part.getImage()));
-			System.out.println("Image==================="+image);
-			//Rating
+			// //Image
+			System.out.println("Image===================" + image);
+			// Rating
 			WebElement placeRating = driver.findElement(By.cssSelector(part.getRating()));
 			System.out.println(placeRating.getText());
-			//placeAddress
+			// placeAddress
 			WebElement placeAddress = driver.findElement(By.cssSelector(part.getAddress()));
 			System.out.println(placeAddress.getText());
-			
+
 		} catch (WebDriverException e) {
 			System.out.println("Not found element place-name");
 		}
@@ -39,9 +39,9 @@ public class PlaceDetail {
 			// Description
 			WebElement placeDesciption = driver.findElement(By.cssSelector(part.getDescription()));
 			System.out.println(placeDesciption.getText());
-			
-		}catch(WebDriverException e) {
-			
+
+		} catch (WebDriverException e) {
+
 		}
 		// openTime
 		try {
@@ -77,17 +77,18 @@ public class PlaceDetail {
 		part.getDataFromPattern();
 		WebDriver driver = DocumentDriver.getDriver();
 		part.getDocument(driver);
-		HashMap<String,String> linkList = part.getLinkList(driver);
+		HashMap<String, String> linkList = part.getLinkList(driver);
 		try {
+			;
 			WebDriver dr = new FirefoxDriver();
 			for (Map.Entry<String, String> link : linkList.entrySet()) {
 				try {
 					dr.get(link.getKey());
-					crawlPage(dr, part,link.getValue());
+					crawlPage(dr, part, link.getValue());
 					dr.close();
 					dr = new FirefoxDriver();
 				} catch (WebDriverException e) {// Exit browser immediate, disconnect
-					System.out.println("GetLinks=============" + e.getMessage());
+
 				} catch (NullPointerException e1) {// Not found attribute href after replace href1
 
 				}
