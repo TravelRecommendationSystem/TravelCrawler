@@ -17,7 +17,7 @@ public class TripNFetch extends TripFetch {
 	}
 
 	// Login system
-	public void getDocumen(WebDriver driver, String userName, String passWord) {
+	public void getDocument(WebDriver driver, String userName, String passWord) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			driver.get("https://www.tripnow.vn/ho-chi-minh/travel/tim-kiem?q=&ds=dia-diem&dtids=696,694,699,1,12,14,5");
