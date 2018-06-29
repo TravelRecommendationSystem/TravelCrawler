@@ -36,8 +36,6 @@ public class TripAdFetch extends TripFetch {
 			WebDriverWait wait = new WebDriverWait(driver, 20);
 			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.nav.next")));
 			WebElement webElement = driver.findElement(By.cssSelector("a.nav.next"));
-			// List<WebElement> listElements =
-			// driver.findElements(By.cssSelector("div.listing_title > a"));
 			while (webElement.getText().equals("Tiếp theo")) {
 				try {
 					List<WebElement> elementLinkList = driver.findElements(By.cssSelector("div.listing_title > a"));

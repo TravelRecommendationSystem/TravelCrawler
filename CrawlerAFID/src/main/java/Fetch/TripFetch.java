@@ -204,11 +204,6 @@ public class TripFetch {
 
 	}
 
-	public HashMap<String, String> expandAllPlaces(WebDriver driver) {
-		HashMap<String, String> linkList = new HashMap<String, String>();
-		return linkList;
-	}
-
 	public HashMap<String, String> getLinkList(WebDriver driver) {
 		HashMap<String, String> linkList = new HashMap<String, String>();
 		return linkList;
