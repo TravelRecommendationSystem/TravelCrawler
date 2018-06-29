@@ -2,6 +2,7 @@ package Parse;
 
 import java.util.List;
 
+import Fetch.DocumentDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -78,7 +79,11 @@ public class PlaceDetail {
 		// Save database
 	}
 
-	public static void crawlLinks(WebDriver driver, List<String> linkList, TripFetch part) {
+	public static void crawlLinks(TripFetch part) {
+		part.getDataFromPattern();
+		WebDriver driver = DocumentDriver.getDriver();
+		part.getDocument(driver,"","");
+		List<String> linkList = part.getLinkList(driver);
 		try {
 			WebDriver dr = new FirefoxDriver();
 			System.out.println("CRAWLLINKS START");

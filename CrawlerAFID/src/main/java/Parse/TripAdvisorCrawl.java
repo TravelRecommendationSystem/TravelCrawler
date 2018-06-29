@@ -10,11 +10,6 @@ import Fetch.TripAdFetch;
 
 public class TripAdvisorCrawl{
 	public static void main(String[] arg) {
-		TripFetch tripNowPart = new TripAdFetch("tripadvisor.com");
-		tripNowPart.getDataFromPattern();
-		WebDriver driver = DocumentDriver.getDriver();
-		tripNowPart.getDocument(driver,"","");
-		List<String> linkList = tripNowPart.getLinkList(driver);
-		PlaceDetail.crawlLinks(driver, linkList, tripNowPart);
+		PlaceDetail.crawlLinks(new TripAdFetch());
 	}
 }
