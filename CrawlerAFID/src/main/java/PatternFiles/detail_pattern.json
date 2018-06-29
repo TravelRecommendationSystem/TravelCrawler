@@ -1,0 +1,64 @@
+{
+	"tripnow.vn": {
+		"rootUrl": "https://id.foody.vn/account/login?returnUrl=https://www.tripnow.vn/ho-chi-minh/travel/tim-kiem?ds=dia-diem",
+		"name": ".place-name",
+		"description": "div.porlet-content",
+		"image": ".embed-foody > img",
+		"rating": ".place-total-score",
+		"address": ".place-meta-item",
+		"openTime":{
+			"target": ".place-meta-item",
+			"index":2
+		 },
+		"placeType":{
+			"target": ".place-type",
+			"index":0
+		 },
+		"placePrice": ".icon-tag",
+		"comments": {
+			"userName": {
+				"selectorType": "className",
+				"target": "story-username"
+			},
+			"description": {
+				"selectorType": "className",
+				"target": "story-desc"
+			},
+			"createdDate": {
+				"selectorType": "cssSelector",
+				"target": ".story-meta-item > span"
+			}
+		}
+	},
+	"tripadvisor.com": {
+		"rootUrl": "https://www.tripadvisor.com.vn/Attractions-g293925-Activities-Ho_Chi_Minh_City.html",
+		"name": "#HEADING",
+		"description": "div.modal-card-body-no-exist",
+		"image": "div.modal-card-body-no-exist",
+		"rating": "span.overallRating",
+		"address": "div.blEntry.address",
+		"openTime":{
+			"target": "div.detail_section.hours > div",
+			"index":1
+		 },
+		"placeType":{
+			"target": "span.header_detail > div > a",
+			"index":0
+		 },
+		"placePrice": ".icon-tag-no-exist",
+		"comments": {
+			"userName": {
+				"selectorType": "cssSelector",
+				"target": "span[class='expand_inline scrname']"
+			},
+			"description": {
+				"selectorType": "cssSelector",
+				"target": "p[class='partial_entry']"
+			},
+			"createdDate": {
+				"selectorType": "cssSelector",
+				"target": "span[class='ratingDate relativeDate']"
+			}
+		}
+	}
+}

@@ -3,110 +3,122 @@ package Model;
 import java.util.List;
 
 public class Place {
-    private String id;
-    private String placeName;
-    private String placeDesciption;
-    private List<String> placeImages;
-    private String placeRating;
-    private String placeAddress;
-    private String placeOpenTime;
-    private String placeType;
-    private String placePrice;
-    private List<Comment> listComment;
+	private String id;
+	private String placeName;
+	private String placeDesciption;
+	private List<String> placeImages;
+	private String placeRating;
+	private String placeAddress;
+	private String placeOpenTime;
+	private String placeType;
+	private String placePrice;
+	private String linkText;
+	private List<Comment> listComment;
 
-    public Place() {
-    }
+	public Place() {
+	}
 
-    public Place(String id, String placeName, String placeDesciption, List<String> placeImages, String placeRating, String placeAddress, String placeOpenTime, String placeType, String placePrice, List<Comment> listComment) {
-        this.id = id;
-        this.placeName = placeName;
-        this.placeDesciption = placeDesciption;
-        this.placeImages = placeImages;
-        this.placeRating = placeRating;
-        this.placeAddress = placeAddress;
-        this.placeOpenTime = placeOpenTime;
-        this.placeType = placeType;
-        this.placePrice = placePrice;
-        this.listComment = listComment;
-    }
+	public Place(String id, String placeName, String placeDesciption, List<String> placeImages, String placeRating,
+			String placeAddress, String placeOpenTime, String placeType, String placePrice, String linkText,
+			List<Comment> listComment) {
+		this.id = id;
+		this.placeName = placeName;
+		this.placeDesciption = placeDesciption;
+		this.placeImages = placeImages;
+		this.placeRating = placeRating;
+		this.placeAddress = placeAddress;
+		this.placeOpenTime = placeOpenTime;
+		this.placeType = placeType;
+		this.placePrice = placePrice;
+		this.linkText = linkText;
+		this.listComment = listComment;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getLinkText() {
+		return linkText;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setLinkText(String linkText) {
+		this.linkText = linkText;
+	}
 
-    public String getPlaceName() {
-        return placeName;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setPlaceName(String placeName) {
-        this.placeName = placeName;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getPlaceDesciption() {
-        return placeDesciption;
-    }
+	public String getPlaceName() {
+		return placeName;
+	}
 
-    public void setPlaceDesciption(String placeDesciption) {
-        this.placeDesciption = placeDesciption;
-    }
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
 
-    public List<String> getPlaceImages() {
-        return placeImages;
-    }
+	public String getPlaceDesciption() {
+		return placeDesciption;
+	}
 
-    public void setPlaceImages(List<String> placeImages) {
-        this.placeImages = placeImages;
-    }
+	public void setPlaceDesciption(String placeDesciption) {
+		this.placeDesciption = placeDesciption;
+	}
 
-    public String getPlaceRating() {
-        return placeRating;
-    }
+	public List<String> getPlaceImages() {
+		return placeImages;
+	}
 
-    public void setPlaceRating(String placeRating) {
-        this.placeRating = placeRating;
-    }
+	public void setPlaceImages(List<String> placeImages) {
+		this.placeImages = placeImages;
+	}
 
-    public String getPlaceAddress() {
-        return placeAddress;
-    }
+	public String getPlaceRating() {
+		return placeRating;
+	}
 
-    public void setPlaceAddress(String placeAddress) {
-        this.placeAddress = placeAddress;
-    }
+	public void setPlaceRating(String placeRating) {
+		this.placeRating = placeRating;
+	}
 
-    public String getPlaceOpenTime() {
-        return placeOpenTime;
-    }
+	public String getPlaceAddress() {
+		return placeAddress;
+	}
 
-    public void setPlaceOpenTime(String placeOpenTime) {
-        this.placeOpenTime = placeOpenTime;
-    }
+	public void setPlaceAddress(String placeAddress) {
+		this.placeAddress = placeAddress;
+	}
 
-    public String getPlaceType() {
-        return placeType;
-    }
+	public String getPlaceOpenTime() {
+		return placeOpenTime;
+	}
 
-    public void setPlaceType(String placeType) {
-        this.placeType = placeType;
-    }
+	public void setPlaceOpenTime(String placeOpenTime) {
+		this.placeOpenTime = placeOpenTime;
+	}
 
-    public String getPlacePrice() {
-        return placePrice;
-    }
+	public String getPlaceType() {
+		return placeType;
+	}
 
-    public void setPlacePrice(String placePrice) {
-        this.placePrice = placePrice;
-    }
+	public void setPlaceType(String placeType) {
+		this.placeType = placeType;
+	}
 
-    public List<Comment> getListComment() {
-        return listComment;
-    }
+	public String getPlacePrice() {
+		return placePrice;
+	}
 
-    public void setListComment(List<Comment> listComment) {
-        this.listComment = listComment;
-    }
+	public void setPlacePrice(String placePrice) {
+		this.placePrice = placePrice;
+	}
+
+	public List<Comment> getListComment() {
+		return listComment;
+	}
+
+	public void setListComment(List<Comment> listComment) {
+		this.listComment = listComment;
+	}
 }
