@@ -171,20 +171,33 @@ public class TripFetch {
 		JsonObject tripObject = rootObject.getJsonObject(domain);
 		JsonObject tripCommentObject = tripObject.getJsonObject("comments");
 		// Get fields
-		this.setRootUrl(tripObject.getString("rootUrl"));
-		this.setName(tripObject.getString("name"));
-		this.setDescription(tripObject.getString("description"));
-		this.setImage(tripObject.getString("image"));
-		this.setRating(tripObject.getString("rating"));
-		this.setAddress(tripObject.getString("address"));
-		this.setOpenTime(tripObject.getJsonObject("openTime").getString("target"));
-		this.setIndexTime(tripObject.getJsonObject("openTime").getInt("index"));
-		this.setPlaceType(tripObject.getJsonObject("placeType").getString("target"));
-		this.setIndexType(tripObject.getJsonObject("placeType").getInt("index"));
-		this.setPlacePrice(tripObject.getString("placePrice"));
-		this.setCommentUsername(tripCommentObject.getJsonObject("userName").getString("target"));
-		this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
-		this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
+		try {
+			this.setRootUrl(tripObject.getString("rootUrl"));
+			this.setName(tripObject.getString("name"));
+			this.setDescription(tripObject.getString("description"));
+			this.setImage(tripObject.getString("image"));
+			this.setRating(tripObject.getString("rating"));
+			this.setAddress(tripObject.getString("address"));
+			this.setPlaceType(tripObject.getJsonObject("placeType").getString("target"));
+			this.setIndexType(tripObject.getJsonObject("placeType").getInt("index"));
+			this.setCommentUsername(tripCommentObject.getJsonObject("userName").getString("target"));
+			this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
+			this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
+		} catch (NullPointerException e) {
+			System.out.println("Default fields not found");
+		}
+
+		try {
+			this.setPlacePrice(tripObject.getString("placePrice"));
+		} catch (NullPointerException e) {
+			System.out.println("PlacePrice not found");
+		}
+		try {
+			this.setOpenTime(tripObject.getJsonObject("openTime").getString("target"));
+			this.setIndexTime(tripObject.getJsonObject("openTime").getInt("index"));
+		} catch (NullPointerException e) {
+			System.out.println("OpenTime not found");
+		}
 	}
 
 	// IF don't exist column catch NullPointerException
