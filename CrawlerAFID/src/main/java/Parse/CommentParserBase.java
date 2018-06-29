@@ -1,18 +1,22 @@
 package Parse;
 
+import Fetch.TripFetch;
 import Model.Comment;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Umino
  * @date 6/29/2018
  */
 
-public abstract class CommentParserBase {
+public class CommentParserBase {
     public class CommentParseResult {
         private List<Comment> listComment;
         private boolean isSuccess;
@@ -37,17 +41,34 @@ public abstract class CommentParserBase {
         }
     }
 
-    private WebDriver driver;
-    private Wait longWait;
-    private Wait shortWait;
 
-    public CommentParserBase(WebDriver driver) {
-        this.driver = driver;
-        longWait = new WebDriverWait(driver, 30);
-        shortWait = new WebDriverWait(driver, 10);
+///////////////////////////////////
+    protected static WebDriverWait longWait;
+    protected static WebDriverWait shortWait;
+
+    protected static List<Comment> getListComment(WebDriver driver, TripFetch pattern) {
+        return null;
     }
 
-    public abstract CommentParseResult parse(String url);
-    protected abstract List<WebDriver> getListCommentWebElement();
-    protected abstract Comment parseOneCommentElement(WebDriver element);
+    protected static Comment parseOneCommentElement(WebElement element, TripFetch pattern) {
+        Comment comment;
+        try {
+            String username = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentUsername()))).getText();
+            String createdDate = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentCreatedDate()))).getText();
+            String description = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentDescription()))).getText();
+
+            comment = new Comment();
+            comment.setUserName(username);
+            comment.setCommentDesciption(description);
+            comment.setCreatedDate(createdDate);
+
+        } catch (TimeoutException ex){
+            System.out.println(ex);
+            return null;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        return comment;
+    }
 }

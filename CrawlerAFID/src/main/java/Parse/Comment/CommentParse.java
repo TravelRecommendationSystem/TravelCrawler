@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Parse;
+package Parse.Comment;
 
 import Model.Comment;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class CommentParse {
     public boolean navigateNextCommentPage(WebDriverWait wait) {
         try {
             String reviewContainerPath = "div[id='REVIEWS']";
-            WebElement commentContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(reviewContainerPath)));
+            WebElement commentContainer = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(reviewContainerPath)));
             commentContainer.findElement(By.cssSelector("a[class='nav next taLnk ui_button primary']")).click();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             return true;

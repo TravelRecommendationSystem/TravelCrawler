@@ -1,8 +1,11 @@
-import Parse.CommentParse;
+import Fetch.DocumentDriver;
+import Fetch.TripAdFetch;
+import Fetch.TripFetch;
+import Parse.TripNowCommentParser;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,28 +18,18 @@ import java.util.concurrent.TimeUnit;
  * @author phuongnl
  */
 public class Main {
-    private static String baseUrl = "https://www.tripadvisor.com.vn/Attraction_Review-g293925-d454974-Reviews-Saigon_Opera_House_Ho_Chi_Minh_Municipal_Theater-Ho_Chi_Minh_City.html";
-    //private static String geckoPath = "/Users/phuongnl/UminoProjects/SpecializeSubject/geckodriver";
-    private static  String geckoPath = "D:\\subject\\SpecializedProject\\Source\\geckodriver.exe";
-    
-    private static String email = "phuong29071996@gmal.com";
-    private static String password = "p1234560";
-    
-    
-    public static void main(String [ ] args) throws InterruptedException {
-        setupEnviroment();
-        WebDriver driver = new FirefoxDriver();
-        driver.get(baseUrl);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        //TimeUnit.SECONDS.sleep(10);
+    //private static String baseUrl = "https://www.tripadvisor.com.vn/Attraction_Review-g293925-d454974-Reviews-Saigon_Opera_House_Ho_Chi_Minh_Municipal_Theater-Ho_Chi_Minh_City.html";
 
-        CommentParse commentParse = new CommentParse(driver);
-        commentParse.parse();
-        
-        driver.quit();
-    }
-    
-    private static void setupEnviroment() {
-        System.setProperty("webdriver.gecko.driver", geckoPath);
+    public static void main(String [ ] args) {
+        TripFetch tripNowPart = new TripAdFetch("tripnow.vn");
+        tripNowPart.getDataFromPattern();
+        WebDriver driver = DocumentDriver.getDriver();
+        tripNowPart.getDocument(driver, "", "");
+//        List<String> linkList = tripNowPart.getLinkList(driver);
+        List<String> ulrs = new ArrayList<String>();
+        ulrs.add("https://www.tripnow.vn/vung-tau/chua-quan-am-nam-hai-22676");
+        ulrs.add("https://www.tripnow.vn/ho-chi-minh/nha-tho-duc-ba-saigon-notre-dame-basilica-21851");
+        ulrs.add("https://www.tripnow.vn/ho-chi-minh/pho-di-bo-nguyen-hue-19306");
+        TripNowCommentParser.crawlLinks(driver, ulrs, tripNowPart);
     }
 }

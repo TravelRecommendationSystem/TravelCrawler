@@ -17,16 +17,16 @@
 		"placePrice": ".icon-tag",
 		"comments": {
 			"userName": {
-				"selectorType": "className",
-				"target": "story-username"
+				"selectorType": "cssSelector",
+				"target": "div.story-username > a"
 			},
 			"description": {
-				"selectorType": "className",
-				"target": "story-desc"
+				"selectorType": "cssSelector",
+				"target": "div.story-body > div.story-desc.ng-binding"
 			},
 			"createdDate": {
 				"selectorType": "cssSelector",
-				"target": ".story-meta-item > span"
+				"target": "div.story-meta-item > span.ng-binding"
 			}
 		}
 	},
