@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import Fetch.DocumentDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -72,7 +73,11 @@ public class PlaceDetail {
 		// Save database
 	}
 
-	public static void crawlLinks(HashMap<String,String> linkList, TripFetch part) {
+	public static void crawlLinks(TripFetch part) {
+		part.getDataFromPattern();
+		WebDriver driver = DocumentDriver.getDriver();
+		part.getDocument(driver);
+		HashMap<String,String> linkList = part.getLinkList(driver);
 		try {
 			WebDriver dr = new FirefoxDriver();
 			for (Map.Entry<String, String> link : linkList.entrySet()) {

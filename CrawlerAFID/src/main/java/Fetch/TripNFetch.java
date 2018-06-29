@@ -14,8 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TripNFetch extends TripFetch {
 	private String userName;
 	private String passWord;
-	public TripNFetch(String domain) {
-		this.setDomain(domain);
+
+	public TripNFetch() {
+		this.setDomain("tripnow.vn");
 		userName = "truongvinhtienuit@gmail.com";
 		passWord = "123456";
 	}
@@ -36,8 +37,8 @@ public class TripNFetch extends TripFetch {
 	}
 
 	// Click XemThem button if exist XemThem button
-	public HashMap<String,String> expandAllPlaces(WebDriver driver) {
-		HashMap<String,String> linkList = new HashMap<String,String>();
+	public HashMap<String, String> expandAllPlaces(WebDriver driver) {
+		HashMap<String, String> linkList = new HashMap<String, String>();
 		try {// Check page loaded XemThem
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Xem thêm")));
@@ -58,14 +59,15 @@ public class TripNFetch extends TripFetch {
 	}
 
 	// get LinkList
-	public HashMap<String,String> getLinkList(WebDriver driver) {
-		HashMap<String,String> linkList = new HashMap<String,String>();
+	public HashMap<String, String> getLinkList(WebDriver driver) {
+		HashMap<String, String> linkList = new HashMap<String, String>();
 		expandAllPlaces(driver);
 		List<WebElement> elementLinkList = driver.findElements(By.className("link-absolute"));
-		List<WebElement> elementImageList = driver.findElements(By.cssSelector(".reviewbox-img.embed.embed-foody > img"));
+		List<WebElement> elementImageList = driver
+				.findElements(By.cssSelector(".reviewbox-img.embed.embed-foody > img"));
 		for (int i = 0; i < elementLinkList.size(); i++) {
-			
-			linkList.put(elementImageList.get(i).getAttribute("href"),elementImageList.get(i).getAttribute("src"));
+
+			linkList.put(elementImageList.get(i).getAttribute("href"), elementImageList.get(i).getAttribute("src"));
 		}
 		return linkList;
 	}

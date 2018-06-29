@@ -14,8 +14,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TripAdFetch extends TripFetch {
-	public TripAdFetch(String domain) {
-		this.setDomain(domain);
+	public TripAdFetch() {
+		this.setDomain("tripadvisor.com");
 	}
 
 	public void getDocument(WebDriver driver) {
