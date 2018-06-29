@@ -27,9 +27,8 @@ public class Main {
         setupEnviroment();
         WebDriver driver = new FirefoxDriver();
         driver.get(baseUrl);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
-        TimeUnit.SECONDS.sleep(10);
-        
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        //TimeUnit.SECONDS.sleep(10);
 
         CommentParse commentParse = new CommentParse(driver);
         commentParse.parse();

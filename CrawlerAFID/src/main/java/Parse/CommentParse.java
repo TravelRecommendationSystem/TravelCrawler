@@ -8,6 +8,8 @@ package Parse;
 import Model.Comment;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,28 +33,39 @@ public class CommentParse {
     }
     
     public void parse() {
-        listComment = new ArrayList<Comment>();
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        //List<WebElement> commentElements = new ArrayList<WebElement>();
+        WebDriverWait longWait = new WebDriverWait(driver, 30);
+        WebDriverWait shortWait = new WebDriverWait(driver, 10);
 
         // khi nút next còn hiện thì còn thực hiện
         do {
-            List<WebElement> commentElements = getCommentElements(wait);
+            List<WebElement> commentElements = getCommentElements(longWait);
             for (WebElement element : commentElements) {
+                seeMoreCommentDescription(element);
                 Comment comment = parseOneComment(element);
                 if (comment != null) {
                     listComment.add(comment);
                 }
             }
         }
-        while (navigateNextCommentPage(wait));
+        while (navigateNextCommentPage(longWait));
         System.out.println(listComment);
+    }
+
+    public void seeMoreCommentDescription(WebElement element) {
+        try {
+            element.findElement(By.cssSelector("span[class='taLnk ulBlueLinks']")).click();
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        } catch (Exception ex) {
+            // This comment is short, so no need for having button more
+        }
     }
 
     public boolean navigateNextCommentPage(WebDriverWait wait) {
         try {
-            By nextButtonPath = By.cssSelector("div[class='prw_rup prw_common_north_star_pagination responsive'] > div > a[class='nav next taLnk ui_button primary']");
-            wait.until(ExpectedConditions.visibilityOfElementLocated(nextButtonPath)).click();
+            String reviewContainerPath = "div[id='REVIEWS']";
+            WebElement commentContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(reviewContainerPath)));
+            commentContainer.findElement(By.cssSelector("a[class='nav next taLnk ui_button primary']")).click();
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             return true;
         } catch (Exception ex) {
             return false;
@@ -60,9 +73,10 @@ public class CommentParse {
     }
     
     public List<WebElement> getCommentElements(WebDriverWait wait) {
+        String commentContainerPath = "div[class='listContainer responsive'] > div[class='review-container']";
         List<WebElement> commentElements = new ArrayList<WebElement>();
         try {
-            commentElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("div[class='review-container']")));
+            commentElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(commentContainerPath)));
         } catch(Exception ex) {
             System.out.println(ex);
         }
@@ -73,8 +87,8 @@ public class CommentParse {
         Comment comment;
         try {
             String username = element.findElement(By.cssSelector("span[class='expand_inline scrname']")).getText();
-            String description = element.findElement(By.cssSelector("p[class='partial_entry']")).getText();
             String createdDate = element.findElement(By.cssSelector("span[class='ratingDate relativeDate']")).getText();
+            String description = element.findElement(By.cssSelector("p[class='partial_entry']")).getText();
             
             comment = new Comment();
             comment.setUserName(username);
