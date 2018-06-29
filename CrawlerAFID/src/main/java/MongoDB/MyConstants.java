@@ -7,7 +7,8 @@ public class MyConstants {
     public static final String DB_NAME ="Place";
     public static final String LINK_COLLECTION_NAME = "Link";
     public static final String PLACE_COLLECTION_NAME = "Place";
-
+    //Link geckodriver
+    public static final String LINK_CONNECT_GECKODRIVER = "/home/tienbui/Downloads/geckodriver";
     //field in link collection
     public static final String URL_FIELD = "URL";
     public  static final String FLAG_FIELD = "Flag";
