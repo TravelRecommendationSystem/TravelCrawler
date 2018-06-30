@@ -1,4 +1,4 @@
-package Parse;
+package Parse.Comment;
 
 import Fetch.TripFetch;
 import Model.Comment;
@@ -45,6 +45,32 @@ public class TripNowCommentParser extends CommentParserBase {
             driver.quit();
             System.out.println(ex);
         }
+    }
+
+    // parse all comments inside a place link
+    public static List<Comment> parseComments(WebDriver driver, String url, TripFetch pattern) {
+        List<Comment> comments = null;
+        try {
+                driver.quit();
+                //open new window
+                driver = new FirefoxDriver();
+                longWait = new WebDriverWait(driver, 20);
+                shortWait = new WebDriverWait(driver, 10);
+
+                // switch to comment tab
+                driver.get(url + "/binh-luan");
+
+                // parse one link
+                expandAllComment(driver);
+                comments = getListComment(driver, pattern);
+                driver.quit();
+
+        } catch (Exception ex) {
+            // Network interrupt
+            driver.quit();
+            System.out.println(ex);
+        }
+        return comments;
     }
 
     private static WebElement expandAllComment(WebDriver driver) {

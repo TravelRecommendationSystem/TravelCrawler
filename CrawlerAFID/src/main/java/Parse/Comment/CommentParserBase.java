@@ -1,4 +1,4 @@
-package Parse;
+package Parse.Comment;
 
 import Fetch.TripFetch;
 import Model.Comment;
@@ -49,7 +49,7 @@ public class CommentParserBase {
     protected static List<Comment> getListComment(WebDriver driver, TripFetch pattern) {
         return null;
     }
-
+    public static List<Comment> parseComments(WebDriver driver, String url, TripFetch pattern) { return null;}
     protected static Comment parseOneCommentElement(WebElement element, TripFetch pattern) {
         Comment comment;
         try {
