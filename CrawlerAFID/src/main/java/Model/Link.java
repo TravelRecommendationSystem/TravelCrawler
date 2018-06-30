@@ -16,6 +16,11 @@ public class Link {
         this.numberRequest = numberRequest;
     }
 
+    public Link(String linkText, Boolean flag) {
+        this.linkText = linkText;
+        this.flag = flag;
+    }
+
     public String getLinkText() {
         return linkText;
     }

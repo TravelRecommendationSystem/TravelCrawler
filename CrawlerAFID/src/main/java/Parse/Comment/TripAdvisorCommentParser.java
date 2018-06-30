@@ -2,6 +2,8 @@ package Parse.Comment;
 
 import Fetch.TripFetch;
 import Model.Comment;
+import Model.Link;
+import Utils.Pair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -23,8 +25,8 @@ public class TripAdvisorCommentParser extends CommentParserBase {
         try {
             driver.quit();
             for (String url : linkList) {
-                List<Comment> commentsInOneLink = parseComments(driver, url, part);
-                comments.addAll(commentsInOneLink);
+                Pair<List<Comment>, Link> result = parseComments(driver, url, part);
+                comments.addAll(result.getFirst());
             }
             System.out.println(comments);
         } catch (Exception ex) {
@@ -34,8 +36,10 @@ public class TripAdvisorCommentParser extends CommentParserBase {
         }
     }
 
-    public static List<Comment> parseComments(WebDriver driver, String url, TripFetch pattern) {
+    public static Pair<List<Comment>, Link> parseComments(WebDriver driver, String url, TripFetch pattern) {
         List<Comment> comments = null;
+        Boolean isSuccess = true;
+
         try {
             comments = new ArrayList<Comment>();
             driver.quit();
@@ -47,12 +51,17 @@ public class TripAdvisorCommentParser extends CommentParserBase {
 
             // khi nút next còn hiện thì còn thực hiện
             do {
-                List<WebElement> commentElements = getCommentElements();
+                Pair<List<WebElement>, Boolean> result = getCommentElements();
+                List<WebElement> commentElements = result.getFirst();
+                isSuccess &= result.getSecond();
+
                 for (WebElement element : commentElements) {
                     seeMoreCommentDescription(element);
                     Comment comment = parseOneCommentElement(element, pattern);
                     if (comment != null) {
                         comments.add(comment);
+                    } else {
+                        isSuccess = false;
                     }
                 }
             }
@@ -63,8 +72,9 @@ public class TripAdvisorCommentParser extends CommentParserBase {
             // Network interrupt
             driver.quit();
             System.out.println(ex);
+            isSuccess = false;
         }
-        return comments;
+        return new Pair(comments,  new Link(url, isSuccess));
     }
 
     public static boolean navigateNextCommentPage() {
@@ -84,35 +94,35 @@ public class TripAdvisorCommentParser extends CommentParserBase {
         }
     }
 
-    public static List<WebElement> getCommentElements() {
+    public static Pair<List<WebElement>, Boolean> getCommentElements() {
         String commentContainerPath = "div#taplc_location_reviews_list_responsive_detail_0 > div > div.review-container";
         List<WebElement> commentElements = new ArrayList<WebElement>();
         try {
             commentElements = longWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(commentContainerPath)));
+            return new Pair(commentElements, true);
         } catch (TimeoutException ex){
-            return commentElements;
+            System.out.println(ex);
         } catch(Exception ex) {
             System.out.println(ex);
         }
-        return commentElements;
+        return new Pair(commentElements, false);
     }
 
-    public static void seeMoreCommentDescription(WebElement element) {
+    public static Boolean seeMoreCommentDescription(WebElement element) {
         try {
             String btnSeeMorePath = "span.taLnk.ulBlueLinks";
             shortWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(btnSeeMorePath))).click();
-
+            return true;
         } catch (TimeoutException ex){
             // This comment is short, so no need for having button more
-            return;
         } catch (Exception ex) {
             System.out.println(ex);
-            return;
         }
+        return false;
     }
 
     protected static Comment parseOneCommentElement(WebElement element, TripFetch pattern) {
-        Comment comment;
+        Comment comment = null;
         try {
             String username = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentUsername()))).getAttribute("innerHTML");
             String createdDate = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentCreatedDate()))).getText();
@@ -125,11 +135,10 @@ public class TripAdvisorCommentParser extends CommentParserBase {
 
         } catch (TimeoutException ex){
             System.out.println(ex);
-            return null;
         } catch (Exception ex) {
             System.out.println(ex);
-            return null;
+        } finally {
+            return comment;
         }
-        return comment;
     }
 }

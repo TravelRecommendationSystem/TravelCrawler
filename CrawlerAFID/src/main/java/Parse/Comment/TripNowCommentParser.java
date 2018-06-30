@@ -2,6 +2,9 @@ package Parse.Comment;
 
 import Fetch.TripFetch;
 import Model.Comment;
+import Model.Link;
+import Model.ReturnModel.CommentsReturn;
+import Utils.Pair;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -34,7 +37,7 @@ public class TripNowCommentParser extends CommentParserBase {
 
                 // parse one link
                 expandAllComment(driver);
-                List<Comment> commentsInOneLink = getListComment(driver, part);
+                List<Comment> commentsInOneLink = getListComment(driver, part).getFirst();
 
                 comments.addAll(commentsInOneLink);
                 driver.quit();
@@ -48,8 +51,9 @@ public class TripNowCommentParser extends CommentParserBase {
     }
 
     // parse all comments inside a place link
-    public static List<Comment> parseComments(WebDriver driver, String url, TripFetch pattern) {
-        List<Comment> comments = null;
+    public static Pair<List<Comment>, Link> parseComments(WebDriver driver, String link, TripFetch pattern) {
+        List<Comment> comments = new ArrayList<Comment>();
+        boolean isSuccess = false;
         try {
                 driver.quit();
                 //open new window
@@ -58,19 +62,23 @@ public class TripNowCommentParser extends CommentParserBase {
                 shortWait = new WebDriverWait(driver, 10);
 
                 // switch to comment tab
-                driver.get(url + "/binh-luan");
+                driver.get(link + "/binh-luan");
 
                 // parse one link
                 expandAllComment(driver);
-                comments = getListComment(driver, pattern);
+                Pair<List<Comment>, Boolean> result = getListComment(driver, pattern);
+                comments.addAll(result.getFirst());
+                isSuccess &= result.getSecond();
+
                 driver.quit();
 
         } catch (Exception ex) {
             // Network interrupt
             driver.quit();
             System.out.println(ex);
+            isSuccess = false;
         }
-        return comments;
+        return new Pair(comments, new Link(link, isSuccess));
     }
 
     private static WebElement expandAllComment(WebDriver driver) {
@@ -88,17 +96,20 @@ public class TripNowCommentParser extends CommentParserBase {
         return expandAllComment(driver);
     }
 
-    protected static List<Comment> getListComment(WebDriver driver, TripFetch pattern) {
+    protected static Pair<List<Comment>, Boolean> getListComment(WebDriver driver, TripFetch pattern) {
         List<WebElement> commentContainerElements = new ArrayList<WebElement>();
         List<Comment> commentElements = new ArrayList<Comment>();
         String containerPath = "article.story.border-foody.ng-scope";
+        Boolean isSuccess = true;
 
         try {
             commentContainerElements = longWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(containerPath)));
         } catch (TimeoutException ex) {
             System.out.println(ex);
+            isSuccess = false;
         } catch (Exception ex) {
             System.out.println(ex);
+            isSuccess = false;
         }
         for (WebElement element : commentContainerElements) {
             Comment comment =  parseOneCommentElement(element, pattern);
@@ -106,6 +117,28 @@ public class TripNowCommentParser extends CommentParserBase {
                 commentElements.add(comment);
             }
         }
-        return commentElements;
+        return new Pair(commentElements, isSuccess);
+    }
+
+    protected static Comment parseOneCommentElement(WebElement element, TripFetch pattern) {
+        Comment comment;
+        try {
+            String username = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentUsername()))).getText();
+            String createdDate = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentCreatedDate()))).getText();
+            String description = shortWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, By.cssSelector(pattern.getCommentDescription()))).getText();
+
+            comment = new Comment();
+            comment.setUserName(username);
+            comment.setCommentDesciption(description);
+            comment.setCreatedDate(createdDate);
+
+        } catch (TimeoutException ex){
+            System.out.println(ex);
+            return null;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        return comment;
     }
 }
