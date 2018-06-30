@@ -17,16 +17,16 @@
 		"placePrice": ".icon-tag",
 		"comments": {
 			"userName": {
-				"selectorType": "className",
-				"target": "story-username"
+				"selectorType": "cssSelector",
+				"target": "div.story-username > a"
 			},
 			"description": {
-				"selectorType": "className",
-				"target": "story-desc"
+				"selectorType": "cssSelector",
+				"target": "div.story-body > div.story-desc.ng-binding"
 			},
 			"createdDate": {
 				"selectorType": "cssSelector",
-				"target": ".story-meta-item > span"
+				"target": "div.story-meta-item > span.ng-binding"
 			}
 		}
 	},
@@ -49,15 +49,15 @@
 		"comments": {
 			"userName": {
 				"selectorType": "cssSelector",
-				"target": "span[class='expand_inline scrname']"
+				"target": "div.userInfo > span.expand_inline.scrname"
 			},
 			"description": {
 				"selectorType": "cssSelector",
-				"target": "p[class='partial_entry']"
+				"target": "div.entry > p.partial_entry"
 			},
 			"createdDate": {
 				"selectorType": "cssSelector",
-				"target": "span[class='ratingDate relativeDate']"
+				"target": "div.ratingInfo > span.ratingDate.relativeDate"
 			}
 		}
 	}
