@@ -3,8 +3,7 @@ package Fetch;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -171,34 +170,42 @@ public class TripFetch {
 		JsonObject tripObject = rootObject.getJsonObject(domain);
 		JsonObject tripCommentObject = tripObject.getJsonObject("comments");
 		// Get fields
-		this.setRootUrl(tripObject.getString("rootUrl"));
-		this.setName(tripObject.getString("name"));
-		this.setDescription(tripObject.getString("description"));
-		this.setImage(tripObject.getString("image"));
-		this.setRating(tripObject.getString("rating"));
-		this.setAddress(tripObject.getString("address"));
-		this.setOpenTime(tripObject.getJsonObject("openTime").getString("target"));
-		this.setIndexTime(tripObject.getJsonObject("openTime").getInt("index"));
-		this.setPlaceType(tripObject.getJsonObject("placeType").getString("target"));
-		this.setIndexType(tripObject.getJsonObject("placeType").getInt("index"));
-		this.setPlacePrice(tripObject.getString("placePrice"));
-		this.setCommentUsername(tripCommentObject.getJsonObject("userName").getString("target"));
-		this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
-		this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
+		try {
+			this.setRootUrl(tripObject.getString("rootUrl"));
+			this.setName(tripObject.getString("name"));
+			this.setDescription(tripObject.getString("description"));
+			this.setImage(tripObject.getString("image"));
+			this.setRating(tripObject.getString("rating"));
+			this.setAddress(tripObject.getString("address"));
+			this.setPlaceType(tripObject.getJsonObject("placeType").getString("target"));
+			this.setIndexType(tripObject.getJsonObject("placeType").getInt("index"));
+			this.setCommentUsername(tripCommentObject.getJsonObject("userName").getString("target"));
+			this.setCommentDescription(tripCommentObject.getJsonObject("description").getString("target"));
+			this.setCommentCreatedDate(tripCommentObject.getJsonObject("createdDate").getString("target"));
+		} catch (NullPointerException e) {
+			System.out.println("Default fields not found");
+		}
+
+		try {
+			this.setPlacePrice(tripObject.getString("placePrice"));
+		} catch (NullPointerException e) {
+			System.out.println("PlacePrice not found");
+		}
+		try {
+			this.setOpenTime(tripObject.getJsonObject("openTime").getString("target"));
+			this.setIndexTime(tripObject.getJsonObject("openTime").getInt("index"));
+		} catch (NullPointerException e) {
+			System.out.println("OpenTime not found");
+		}
 	}
 
 	// IF don't exist column catch NullPointerException
-	public void getDocument(WebDriver driver, String userName, String passWord) {
+	public void getDocument(WebDriver driver) {
 
 	}
 
-	public List<String> expandAllPlaces(WebDriver driver) {
-		List<String> linkList = new ArrayList<String>();
-		return linkList;
-	}
-
-	public List<String> getLinkList(WebDriver driver) {
-		List<String> linkList = new ArrayList<String>();
+	public HashMap<String, String> getLinkList(WebDriver driver) {
+		HashMap<String, String> linkList = new HashMap<String, String>();
 		return linkList;
 	}
 
